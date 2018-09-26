@@ -41,3 +41,22 @@ function preenchepessoas(){
     }
   });
 }
+$(document).on("change","#lista", function(){
+  var codigoSelecionado = $("option:selected", ("#lista")).val();
+  $.ajax({
+    type:"get",
+    url:"https://crudmobile2-carlos397.c9users.io/listarumapessoa.php",
+    data:"codigo="+codigoSelecionado,
+    dataType: "json",
+    success: function(data){
+      $.each(data.pessoas, function(i, data){
+        $("#codigo").val(data.codigo);
+        $("#txtNome").val(data.nome);
+        $("#txtCpf").val(data.cpf);
+      });
+    },
+    error: function(data){
+      navigator.notification.alert("erro: "+data);
+    }
+  });
+});
