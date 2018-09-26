@@ -41,6 +41,7 @@ function preenchepessoas(){
     }
   });
 }
+
 $(document).on("change","#lista", function(){
   var codigoSelecionado = $("option:selected", ("#lista")).val();
   $.ajax({
@@ -54,6 +55,22 @@ $(document).on("change","#lista", function(){
         $("#txtNome").val(data.nome);
         $("#txtCpf").val(data.cpf);
       });
+    },
+    error: function(data){
+      navigator.notification.alert("erro: "+data);
+    }
+  });
+});
+
+$(document).on("click", "#deletar", function(){
+  var codigoSelecionado = $("option:selected", ("#lista")).val();
+  $.ajax({
+    type:"get",
+    url:"https://crudmobile2-carlos397.c9users.io/deletar.php",
+    data:"codigo="+codigoSelecionado,
+    success: function(data){
+      navigator.notification.alert(data);
+      location.reload();
     },
     error: function(data){
       navigator.notification.alert("erro: "+data);
